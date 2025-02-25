@@ -28,10 +28,7 @@ app.post("/screenshot", upload.none(), async (req, res) => {
     if (!/^https?:\/\/.+$/.test(url)) return res.status(400).send("Invalid URL.");
 
     try {
-        const browser = await puppeteer.launch({
-            headless: "new",
-            args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        });
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(url, { timeout: 60000 });
         const screenshotBuffer = await page.screenshot({ type: "png" });
